@@ -1,14 +1,12 @@
 public class Board {
     int dim;
     char[][] b;
-    boolean game_end;
+    int fill;
     public Board(int n) {
         dim=n;
         b = new char[dim][dim];
         build_board();
-        status = GameStatus.ONGOING;
-        game_end=false;
-        winChecker = grs;
+        fill=0;
 
     }
     private void build_board(){
@@ -22,24 +20,17 @@ public class Board {
             }}
 
     }
-    
-    boolean place(Player p,int pos){
-        if(markBoard( pos, p)){
-            return true;
-            // showing it as a valid move 
-            
-
-        }
-        return false;
-       
-
+    boolean isDrawState(){
+        return fill==dim*dim - 1;
     }
+  
    
-    private boolean  markBoard(int pos,Player p){
-        int i=pos/dim;
-        int j=pos%dim;
+     boolean  markBoard(Player p,int pos){
+        int i = (pos - 1) / 3;
+        int j = (pos - 1) % 3;
         if(Character.isDigit(b[i][j])){
             b[i][j]=p.symbol;
+            fill++;
             return true;
         }
         return false;
@@ -56,6 +47,9 @@ public class Board {
             System.out.println("");
 
         }
+    }
+    void displayWin(){
+        System.out.println("Displaying win board");
     }
     
 }
